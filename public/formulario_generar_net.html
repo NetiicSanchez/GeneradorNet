@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario con Historial</title>
+  <style>
+    body { font-family: sans-serif; margin: 20px; }
+    form { margin-bottom: 40px; }
+    input, button { display: block; margin: 10px 0; padding: 8px; }
+    ul { list-style: none; padding: 0; }
+    li { background: #f0f0f0; margin: 5px 0; padding: 8px; }
+    img { max-width: 100px; }
+  </style>
+</head>
+<body>
+
+<h1>Formulario para Generar Código NET</h1>
+
+<form id="formulario" enctype="multipart/form-data">
+  <input type="text" name="nombre_cliente" placeholder="Nombre del cliente" required>
+  <input type="text" name="coordenadas" placeholder="Coordenadas" required>
+  <input type="file" name="foto" accept="image/*" required>
+  <button type="submit">Generar Código NET</button>
+</form>
+
+<h2>Historial de Códigos NET Generados</h2>
+<ul id="historial"></ul>
+
+<script>
+  async function cargarHistorial() {
+    try {
+      const res = await fetch('/historial-net');
+      const lista = await res.json();
+      const contenedor = document.getElementById('historial');
+      contenedor.innerHTML = '';
+      lista.forEach(item => {
+        const li = document.createElement('li');
+    li.innerHTML = `
+  <strong>${item.codigo_net}</strong><br>
+  Cliente: ${item.nombre_cliente}<br>
+  Coordenadas: ${item.coordenadas}<br>
+  <img src="${item.foto}" alt="Foto del cliente" width="150"><br>
+  <a href="${item.foto}" target="_blank">Ver foto</a>
+`;
+
+        contenedor.appendChild(li);
+      });
+    } catch (err) {
+      console.error('Error al cargar historial:', err);
+    }
+  }
+
+  document.getElementById('formulario').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    try {
+      const res = await fetch('/generar-net', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.codigo) {
+        alert(' Código generado: ' + data.codigo);
+        e.target.reset();
+        cargarHistorial();
+      } else {
+        alert(' Error: ' + data.error);
+      }
+    } catch (err) {
+      console.error('Error generando código:', err);
+      alert(' Error inesperado');
+    }
+  });
+
+  cargarHistorial();
+</script>
+
+</body>
+</html>
