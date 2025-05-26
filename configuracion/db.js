@@ -1,7 +1,7 @@
     // codigo para la conexión a la base de datos
     const { Sequelize } = require('sequelize');
 
-    const Sequelize =new Sequelize (process.env.DATABASE_URL, {
+    const sequelize =new Sequelize (process.env.DATABASE_URL, {
     dialect: 'postgres',
     protocol: 'postgres',
     dialectOptions: {
