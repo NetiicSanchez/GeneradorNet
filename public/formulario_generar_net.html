@@ -2,81 +2,45 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Formulario para Generar Código NET</title>
+  <title>Formulario Técnico</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-  <div class="container">
-    <h1 class="titulo">Formulario para Generar Código NET</h1>
-    <form id="formulario" enctype="multipart/form-data" class="formulario-net">
+  <div class="contenedor">
+    <h1>Generar Código NET</h1>
+    <form id="formulario" enctype="multipart/form-data">
       <input type="text" name="nombre_cliente" placeholder="Nombre del cliente" required>
       <input type="text" name="coordenadas" placeholder="Coordenadas" required>
       <input type="file" name="foto" accept="image/*" required>
       <button type="submit">Generar Código NET</button>
     </form>
-
-    <div id="seccion-despacho" class="seccion-despacho oculto">
-      <h2>Historial de Códigos NET Generados</h2>
-      <input type="text" id="buscador" placeholder="Buscar por código NET...">
-      <ul id="historial"></ul>
-    </div>
   </div>
 
   <script>
-    function cargarHistorial() {
-      fetch('/historial-net')
-        .then(res => res.json())
-        .then(lista => {
-          const contenedor = document.getElementById('historial');
-          contenedor.innerHTML = '';
-          lista.forEach(item => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-              <strong>${item.codigo_net}</strong><br>
-              Cliente: ${item.nombre_cliente}<br>
-              Coordenadas: ${item.coordenadas}<br>
-              <img src="${item.foto}" alt="Foto del cliente" width="120"><br>
-              <a href="${item.foto}" target="_blank">Ver foto</a>
-            `;
-            contenedor.appendChild(li);
-          });
-        });
-    }
-
-    document.getElementById('formulario').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      try {
-        const res = await fetch('/generar-net', {
-          method: 'POST',
-          body: formData
-        });
-        const data = await res.json();
-        if (data.codigo) {
-          alert('Código generado: ' + data.codigo);
-          e.target.reset();
-          cargarHistorial();
-        } else {
-          alert('Error: ' + data.error);
-        }
-      } catch (err) {
-        alert('Error inesperado');
-      }
-    });
-
-    document.getElementById('buscador').addEventListener('input', function () {
-      const filtro = this.value.toLowerCase();
-      const items = document.querySelectorAll('#historial li');
-      items.forEach(item => {
-        item.style.display = item.innerText.toLowerCase().includes(filtro) ? '' : 'none';
-      });
-    });
-
-    // Mostrar la sección de despacho solo si la URL contiene ?despacho
     if (window.location.search.includes('despacho')) {
-      document.getElementById('seccion-despacho').classList.remove('oculto');
-      cargarHistorial();
+      document.body.innerHTML = '<h2>Solo personal autorizado puede acceder al formulario</h2>';
+    } else {
+      document.getElementById('formulario').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        try {
+          const res = await fetch('/generar-net', {
+            method: 'POST',
+            body: formData
+          });
+          const data = await res.json();
+          if (data.codigo) {
+            alert('Código generado: ' + data.codigo);
+            e.target.reset();
+          } else {
+            alert(' Error: ' + data.error);
+          }
+        } catch (err) {
+          console.error('Error generando código:', err);
+          alert('Error inesperado');
+        }
+      });
     }
   </script>
 </body>

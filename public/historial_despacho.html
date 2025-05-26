@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Historial Despacho</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <div class="contenedor">
+    <h1>Historial de Códigos NET</h1>
+    <input type="text" id="buscar" placeholder="Buscar código NET...">
+    <ul id="historial"></ul>
+  </div>
+
+  <script>
+    if (!window.location.search.includes('despacho')) {
+      document.body.innerHTML = '<h2>Acceso restringido solo para Despacho</h2>';
+    } else {
+      async function cargarHistorial() {
+        try {
+          const res = await fetch('/historial-net');
+          const lista = await res.json();
+          const contenedor = document.getElementById('historial');
+          contenedor.innerHTML = '';
+          lista.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+              <strong>${item.codigo_net}</strong><br>
+              Cliente: ${item.nombre_cliente}<br>
+              Coordenadas: ${item.coordenadas}<br>
+              <img src="${item.foto}" alt="Foto del cliente">
+              <a href="${item.foto}" target="_blank">Ver foto</a>
+            `;
+            contenedor.appendChild(li);
+          });
+        } catch (err) {
+          console.error('Error al cargar historial:', err);
+        }
+      }
+
+      document.getElementById('buscar').addEventListener('input', () => {
+        const filtro = document.getElementById('buscar').value.toLowerCase();
+        const items = document.querySelectorAll('#historial li');
+        items.forEach(item => {
+          item.style.display = item.innerText.toLowerCase().includes(filtro) ? '' : 'none';
+        });
+      });
+
+      cargarHistorial();
+    }
+  </script>
+</body>
+</html>
