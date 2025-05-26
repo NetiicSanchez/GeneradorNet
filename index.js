@@ -9,7 +9,7 @@ app.use('/fotos', express.static(path.join(__dirname, 'public/fotos')));
 const port = process.env.PORT || 3000; // puerto en el que va a correr el servidor
 
 app.get('/', (req, res) => {
-  res.send('sercidor funcionando');
+  res.send(path.join(__dirname, 'public', 'formulario_generar_net.html'));
 });
 
 
