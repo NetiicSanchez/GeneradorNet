@@ -14,6 +14,6 @@
      timezone:'-06:00' // Ajustar la zona horaria 
     });
 
-    module.exports = Sequelize; 
+    module.exports = sequelize; 
     // exportamos la conexión a la base de datos para poder usarla en otros archivos 
     // (sequelize es el nombre de la variable que contiene la conexión a la base de datos)
