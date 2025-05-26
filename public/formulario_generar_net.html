@@ -31,7 +31,20 @@
           });
           const data = await res.json();
           if (data.codigo) {
-            alert('Código generado: ' + data.codigo);
+            const divMensaje = document.getElementById('mensaje-exito');
+            divMensaje.innerHTML = `Código generado: <span class="net">${data.codigo}</span>`;
+
+            //codigo para copiar al portapapeles
+            navigator.clipboard.writeText(data.codigo).then(() => {
+              console.log('Código NET copiado al portapapeles');
+            });
+
+
+            divMensaje.classList.remove('oculto');
+            // Mostrar mensaje por 5 segundos
+            setTimeout(() => {
+             divMensaje.classList.add('oculto');
+              }, 5000);
             e.target.reset();
           } else {
             alert(' Error: ' + data.error);
