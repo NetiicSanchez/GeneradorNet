@@ -60,7 +60,8 @@ app.get('/logout', (req, res) => {
   });
 });
 
-app.use(express.static('public'));
+app.use('/formulario_generar_net.html', protegido, express.static('public/formulario_generar_net.html'));
+
 app.use('/fotos', express.static(path.join(__dirname, 'public/fotos')));
 const port = process.env.PORT || 3000; // puerto en el que va a correr el servidor
 
