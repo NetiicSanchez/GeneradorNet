@@ -2,7 +2,53 @@ const express = require('express');// nos sirve para crear el servidor
 const sequelize = require('./configuracion/db');//nos sirve para conectar a la base de datos (la base que creamos en el archivo db.js)
 const path = require('path');// nos sirve para manejar rutas de archivos
 const app = express();
+const session = require ('express-session');// nos sirve para manejar sesiones  
 
+app.use(express.urlencoded({ extended: true })); // para poder recibir datos del formulario
+app.use(session({
+  secret:'clave-secreta', // clave secreta para firmar la sesión
+  resave: false, // no volver a guardar la sesión si no ha habido cambios
+  saveUninitialized: false, // no guardar sesiones no inicializadas
+}))
+
+//usuarion que tiene permitido usar al pagina
+const usuarios= [
+  { username: 'tecni1', password: 'admin123' },
+];
+
+app.post('/login', (req, res) => {
+  const {username, password} = req.body;
+  const autorizado = usuarios.find(user => user.username === username && user.password === password);
+  if (autorizado) {
+  req.session.usuario = username;
+  res.redirect('/formulario_generar_net.html');
+
+  }else{
+    res.send('Usuario o contraseña incorrectos');
+  }
+});
+
+// Middleware para proteger
+function protegido(req, res, next) {
+  if (req.session.usuario) return next();
+  res.redirect('/login');
+}
+
+// Ruta protegida
+app.get('/formulario_generar_net.html', protegido, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'formulario_generar_net.html'));
+});
+
+// Mostrar login
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+// Logout
+app.get('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/login');
+  });
+});
 
 app.use(express.static('public'));
 app.use('/fotos', express.static(path.join(__dirname, 'public/fotos')));
