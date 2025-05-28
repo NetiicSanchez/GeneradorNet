@@ -10,10 +10,24 @@
   <div class="contenedor">
     <h1>Generar Código NET</h1>
     <form id="formulario" enctype="multipart/form-data">
-      <input type="text" name="nombre_cliente" placeholder="Nombre del cliente" required>
-      <input type="text" name="coordenadas" placeholder="Coordenadas" required>
-      <input type="file" name="foto" accept="image/*" required>
-      <button type="submit">Generar Código NET</button>
+       <label for="Clientes">Clientes:</label>
+        <select name="nombre_cliente" id="Clientes">
+            <option value="" disabled selected>SELECCIONE SU CLIENTE</option>
+            <option value="WENDY">WENDY ESMERALDA GRAMAJO DE LEON DE MIRANDA</option>
+            <option value="LUIS">LUIS ANGEL BATEN MONTERROSO</option>
+            <option value="EDGAR">EDGAR ARMIN RUIZ</option>
+            <option value="JESUS">JESUS ALBERTO ROMAN PEREZ CHOCHOM B</option>
+            <option value="HENRY">HENRY DAVID TIGUILA RIVERA</option>
+            <option value="LIDIA">LIDIA LISBETH MERIDA CHAVEZ DE LOPEZ</option>
+            <option value="IVAN">IVAN ALEXANDER PEREZ PALACIOS</option>
+            <option value="ALLAN">ALLAN REMYS ANDRADE ALVARADO</option>
+            <option value="SANTOS">SANTOS AMPARO ROSALES PEREZ DE MORALES</option>
+            <option value="EMERSSON">EMERSSON ABIMAEL SANTA Y VELAZQUES</option>
+            <option value="GILBERTO">GILBERTO ESTUARDO MONZON GONON</option>
+        </select required>
+      <input type="text" id="coordenadas" name="coordenadas" placeholder="Coordenadas" required>
+      <input type="file"  name="foto" accept="image/*" required>
+      <button type="submit" onclick="validacionCoordenadas()">Generar Código NET</button>
     </form>
   </div>
 
@@ -55,8 +69,21 @@
         }
       });
     }
+
+    function validacionCoordenadas(){
+      let entrada = document.getElementById("coordenadas").value.trim();
+      let expRegular= /^-?([1-8]?\d(\.\d+)?|90(\.0+)?),\s?-?((1[0-7]\d(\.\d+)?|180(\.0+)?|\d{1,2}(\.\d+)?))$/;
+;
+    if (!expRegular.test(entrada)) {
+        alert("Las coordenadas NO estan en el fomato correcto");
+        return false;
+      }
+      return true;
+    }
     
   </script>
   <div id="mensaje-exito" class="mensaje oculto"></div>
 </body>
 </html>
+<!-- /^-?([1-8]?\d(\.\d+)?|90(\.0+)?)[,\s]-?((1[0-7]\d(\.\d+)?|180(\.0+)?|\d{1,2}(\.\d+)?))$/;
+ -->

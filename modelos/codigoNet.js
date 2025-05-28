@@ -1,4 +1,4 @@
-const {DataTypes} = require('sequelize');
+const {DataTypes} = require('sequelize'); // importamos DataTypes de sequelize para definir los tipos de datos de los campos del modelo (se usa para base de datos relacional)
 const sequelize = require('../configuracion/db');// importamos la conexión a la base de datos
 
 const Codigonet = sequelize.define('codigo_net', {
