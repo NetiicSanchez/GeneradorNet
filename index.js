@@ -69,6 +69,17 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'formulario_generar_net.html'));
 });
 
+// Login y archivos públicos permitidos
+app.use('/login', express.static('public/login.html'));
+app.use('/css', express.static('public/css'));
+app.use('/js', express.static('public/js'));
+
+// Proteger formulario
+app.get('/formulario_generar_net.html', protegido, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'formulario_generar_net.html'));
+});
+
+
 
 
 async function startServer() {
