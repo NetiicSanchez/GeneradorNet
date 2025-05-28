@@ -13,7 +13,17 @@ app.use(session({
 
 //usuarion que tiene permitido usar al pagina
 const usuarios= [
-  { username: 'tecni1', password: 'admin123' },
+  { username: 'tecsesus', password: 'jesushuox' },
+  { username: 'tecpedro', password: 'pedromenchu' },
+  { username: 'tecjulio', password: 'juliobarrios' },
+  { username: 'tecjoseangel', password: 'joseangel' },
+  { username: 'tecwalter', password: 'waltermerida' },
+  { username: 'tecjorge', password: 'jorgegutierrez' },
+  { username: 'tecjoseramirez', password: 'joseramirez' },
+  { username: 'tecalex', password: 'alexlux' },
+  { username: 'tecmarcos', password: 'marcoslopez' },
+  { username: 'tecroman', password: 'romanxec' },
+  { username: 'tecmelvin', password: 'melvinrojas' },
 ];
 
 app.post('/login', (req, res) => {
