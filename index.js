@@ -13,6 +13,7 @@ app.use(session({
 
 //usuarion que tiene permitido usar al pagina
 const usuarios= [
+  { username: 'tecni1', password: 'admin123' },
   { username: 'tecsesus', password: 'jesushuox' },
   { username: 'tecpedro', password: 'pedromenchu' },
   { username: 'tecjulio', password: 'juliobarrios' },
@@ -60,25 +61,13 @@ app.get('/logout', (req, res) => {
   });
 });
 
-app.use('/formulario_generar_net.html', protegido, express.static('public/formulario_generar_net.html'));
-
+app.use(express.static('public'));
 app.use('/fotos', express.static(path.join(__dirname, 'public/fotos')));
 const port = process.env.PORT || 3000; // puerto en el que va a correr el servidor
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'formulario_generar_net.html'));
 });
-
-// Login y archivos públicos permitidos
-app.use('/login', express.static('public/login.html'));
-app.use('/css', express.static('public/css'));
-app.use('/js', express.static('public/js'));
-
-// Proteger formulario
-app.get('/formulario_generar_net.html', protegido, (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'formulario_generar_net.html'));
-});
-
 
 
 
@@ -89,7 +78,7 @@ async function startServer() {
 
       await sequelize.sync(); // Sincronizar modelos con la base de datos
       console.log('Modelos sincronizados con la base de datos');
-  
+
       app.listen(port, () => {
         console.log(`Servidor corriendo en http://localhost:${port}`);
       });
