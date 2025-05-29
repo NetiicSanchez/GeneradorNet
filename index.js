@@ -13,26 +13,31 @@ app.use(session({
 
 //usuarion que tiene permitido usar al pagina
 const usuarios= [
-  { username: 'tecni1', password: 'admin123' },
-  { username: 'tecsesus', password: 'jesushuox' },
-  { username: 'tecpedro', password: 'pedromenchu' },
-  { username: 'tecjulio', password: 'juliobarrios' },
-  { username: 'tecjoseangel', password: 'joseangel' },
-  { username: 'tecwalter', password: 'waltermerida' },
-  { username: 'tecjorge', password: 'jorgegutierrez' },
-  { username: 'tecjoseramirez', password: 'joseramirez' },
-  { username: 'tecalex', password: 'alexlux' },
-  { username: 'tecmarcos', password: 'marcoslopez' },
-  { username: 'tecroman', password: 'romanxec' },
-  { username: 'tecmelvin', password: 'melvinrojas' },
+  { username: 'tecsesus', password: 'jesushuox',rol:'tecnico' },
+  { username: 'tecpedro', password: 'pedromenchu', rol:'tecnico' },
+  { username: 'tecjulio', password: 'juliobarrios' , rol:'tecnico' },
+  { username: 'tecjoseangel', password: 'joseangel' , rol:'tecnico' },
+  { username: 'tecwalter', password: 'waltermerida' , rol:'tecnico' },
+  { username: 'tecjorge', password: 'jorgegutierrez' , rol:'tecnico' },
+  { username: 'tecjoseramirez', password: 'joseramirez' , rol:'tecnico' },
+  { username: 'tecalex', password: 'alexlux' , rol:'tecnico' },
+  { username: 'tecmarcos', password: 'marcoslopez' , rol:'tecnico' },
+  { username: 'tecroman', password: 'romanxec' , rol:'tecnico' },
+  { username: 'tecmelvin', password: 'melvinrojas' , rol:'tecnico' },
+  { username: 'despmarielos', password: 'marielos211' , rol:'despacho' },
 ];
 
 app.post('/login', (req, res) => {
   const {username, password} = req.body;
   const autorizado = usuarios.find(user => user.username === username && user.password === password);
+
   if (autorizado) {
-  req.session.usuario = username;
-  res.redirect('/formulario_generar_net.html');
+  req.session.usuario = autorizado.username;
+  req.session.rol = autorizado.rol; // Guardar el rol del usuario en la sesión
+  if (autorizado.rol === 'tecnico') {
+    res.redirect('/formulario_generar_net.html'); // Redirigir a la página del técnico
+  } else if (autorizado.rol === 'despacho') {
+    res.redirect('/historial_despacho.html'); // Redirigir a la página del despacho
 
   }else{
     res.send('Usuario o contraseña incorrectos');
