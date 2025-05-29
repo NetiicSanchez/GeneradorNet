@@ -14,9 +14,6 @@
   </div>
 
   <script>
-    if (!window.location.search.includes('despacho')) {
-      document.body.innerHTML = '<h2>Acceso restringido solo para Despacho</h2>';
-    } else {
       async function cargarHistorial() {
         try {
           const res = await fetch('/historial-net');
@@ -48,7 +45,7 @@
       });
 
       cargarHistorial();
-    }
+    
   </script>
 </body>
 </html>
