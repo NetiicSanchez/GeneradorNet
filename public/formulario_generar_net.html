@@ -7,12 +7,14 @@
   <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+  <!-- contenedor principal para que contiene el formulario (para el css)' -->
   <div class="contenedor">
     <h1>Generar Código NET</h1>
     <form id="formulario" enctype="multipart/form-data">
        <label for="Clientes">Clientes:</label>
         <select name="nombre_cliente" id="Clientes">
             <option value="" disabled selected>SELECCIONE SU CLIENTE</option>
+            <!-- las opciones son los nombres de los clientes -->
             <option value="WENDY">WENDY ESMERALDA GRAMAJO DE LEON DE MIRANDA</option>
             <option value="LUIS">LUIS ANGEL BATEN MONTERROSO</option>
             <option value="EDGAR">EDGAR ARMIN RUIZ</option>
@@ -25,30 +27,37 @@
             <option value="EMERSSON">EMERSSON ABIMAEL SANTA Y VELAZQUES</option>
             <option value="GILBERTO">GILBERTO ESTUARDO MONZON GONON</option>
         </select required>
+        <!--campor para agregar infomacion (input)-->
       <input type="text" id="coordenadas" name="coordenadas" placeholder="Coordenadas" required>
       <input type="file"  name="foto" accept="image/*" required>
+      <!-- el validacioncoordenadas en una funcion que tiene una expresion regular -->
       <button type="submit" onclick="validacionCoordenadas()">Generar Código NET</button>
     </form>
   </div>
 
   <script>
+
+    // restringe el acceso si se quiere acceder por link 
     if (window.location.search.includes('despacho')) {
       document.body.innerHTML = '<h2>Solo personal autorizado puede acceder al formulario</h2>';
     } else {
+      // Agrega el evento al formulario para manejar el envío
       document.getElementById('formulario').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
+        e.preventDefault();// Evita el envío normal del formulario
+        const formData = new FormData(e.target);//obtiene los datos del formulario
         try {
+          //envia los datos del formulario al servidor usando fetch
           const res = await fetch('/generar-net', {
             method: 'POST',
             body: formData
           });
           const data = await res.json();
           if (data.codigo) {
+            // Si se genera el código, muestra el codigo generado
             const divMensaje = document.getElementById('mensaje-exito');
             divMensaje.innerHTML = `Código generado: <span class="net">${data.codigo}</span>`;
 
-            //codigo para copiar al portapapeles
+            //codigo para copiar al portapapeles el net generado
             navigator.clipboard.writeText(data.codigo).then(() => {
               console.log('Código NET copiado al portapapeles');
             });
@@ -59,19 +68,24 @@
             setTimeout(() => {
              divMensaje.classList.add('oculto');
               }, 5000);
-            e.target.reset();
+            e.target.reset();// limpia el formulario
           } else {
+            // Si hay un error, muestra el mensaje de error
             alert(' Error: ' + data.error);
           }
+          
         } catch (err) {
+          // Maneja cualquier error inesperado
           console.error('Error generando código:', err);
           alert('Error inesperado');
         }
       });
     }
 
+    // Función para validar las coordenadas ingresadas
     function validacionCoordenadas(){
       let entrada = document.getElementById("coordenadas").value.trim();
+      //expresion regular para validar las coordenadas (latitud, longitud)
       let expRegular= /^-?([1-8]?\d(\.\d+)?|90(\.0+)?),\s?-?((1[0-7]\d(\.\d+)?|180(\.0+)?|\d{1,2}(\.\d+)?))$/;
 ;
     if (!expRegular.test(entrada)) {

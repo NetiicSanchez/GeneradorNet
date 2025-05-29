@@ -17,17 +17,17 @@ app.use(session({
 
 //usuarion que tiene permitido usar al pagina
 const usuarios= [
-  { username: 'tecsesus', password: 'jesushuox',rol:'tecnico' },
-  { username: 'tecpedro', password: 'pedromenchu', rol:'tecnico' },
-  { username: 'tecjulio', password: 'juliobarrios' , rol:'tecnico' },
-  { username: 'tecjoseangel', password: 'joseangel' , rol:'tecnico' },
-  { username: 'tecwalter', password: 'waltermerida' , rol:'tecnico' },
-  { username: 'tecjorge', password: 'jorgegutierrez' , rol:'tecnico' },
-  { username: 'tecjoseramirez', password: 'joseramirez' , rol:'tecnico' },
-  { username: 'tecalex', password: 'alexlux' , rol:'tecnico' },
-  { username: 'tecmarcos', password: 'marcoslopez' , rol:'tecnico' },
-  { username: 'tecroman', password: 'romanxec' , rol:'tecnico' },
-  { username: 'tecmelvin', password: 'melvinrojas' , rol:'tecnico' },
+  { username: 'Tecjesus', password: 'jesushuox',rol:'tecnico' },
+  { username: 'Tecpedro', password: 'pedromenchu', rol:'tecnico' },
+  { username: 'Tecjulio', password: 'juliobarrios' , rol:'tecnico' },
+  { username: 'Tecjoseangel', password: 'joseangel' , rol:'tecnico' },
+  { username: 'Tecwalter', password: 'waltermerida' , rol:'tecnico' },
+  { username: 'Tecjorge', password: 'jorgegutierrez' , rol:'tecnico' },
+  { username: 'Tecjoseramirez', password: 'joseramirez' , rol:'tecnico' },
+  { username: 'Tecalex', password: 'alexlux' , rol:'tecnico' },
+  { username: 'Tecmarcos', password: 'marcoslopez' , rol:'tecnico' },
+  { username: 'Tecroman', password: 'romanxec' , rol:'tecnico' },
+  { username: 'Tecmelvin', password: 'melvinrojas' , rol:'tecnico' },
   { username: 'despmarielos', password: 'marielos211' , rol:'despacho' },
 ];
 
