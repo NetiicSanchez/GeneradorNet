@@ -42,6 +42,7 @@ app.post('/login', (req, res) => {
   }else{
     res.send('Usuario o contraseña incorrectos');
   }
+  }
 });
 
 // Middleware para proteger
