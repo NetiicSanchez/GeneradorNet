@@ -9,6 +9,10 @@ app.use(session({
   secret:'clave-secreta', // clave secreta para firmar la sesión
   resave: false, // no volver a guardar la sesión si no ha habido cambios
   saveUninitialized: false, // no guardar sesiones no inicializadas
+  cookie:{
+    maxAge:20 * 60 * 1000 // tiempo de expiración de la sesión en milisegundos (20 minutos)
+  }
+
 }))
 
 //usuarion que tiene permitido usar al pagina
@@ -54,6 +58,11 @@ function protegido(req, res, next) {
 // Ruta protegida
 app.get('/formulario_generar_net.html', protegido, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'formulario_generar_net.html'));
+});
+
+//ruta protegida para el historial de despacho
+app.get('/historial_despacho.html', protegido, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'historial_despacho.html'));
 });
 
 // Mostrar login

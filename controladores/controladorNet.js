@@ -16,6 +16,8 @@ const generarNet = async (req, res) => {
       return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
 
+    
+
    // Crear el enlace completo de la imagen
 const enlaceFoto = req.file?.path;;
 
@@ -28,7 +30,8 @@ const enlaceFoto = req.file?.path;;
       codigo_net: nuevoCodigo,
       nombre_cliente,
       coordenadas,
-      foto: enlaceFoto
+      foto: enlaceFoto,
+      enviado_por: req.session.usuario || 'desconocido'
     });
 
     res.json({

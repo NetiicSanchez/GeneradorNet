@@ -29,6 +29,11 @@ const Codigonet = sequelize.define('codigo_net', {
     foto: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    enviado_por:{
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: 'enviado_por'
     }
 
     
