@@ -36,6 +36,8 @@
   </div>
 
   <script>
+    const formulario = document.getElementById('formulario');
+    const boton = document.querySelector('button[type="submit"]');
 
     // restringe el acceso si se quiere acceder por link 
     if (window.location.search.includes('despacho')) {
@@ -43,6 +45,7 @@
     } else {
       // Agrega el evento al formulario para manejar el envío
       document.getElementById('formulario').addEventListener('submit', async (e) => {
+        boton.disabled = true; // Deshabilita el botón para evitar múltiples envíos         
         e.preventDefault();// Evita el envío normal del formulario
         const formData = new FormData(e.target);//obtiene los datos del formulario
         try {
@@ -67,7 +70,7 @@
             // Mostrar mensaje por 5 segundos
             setTimeout(() => {
              divMensaje.classList.add('oculto');
-              }, 5000);
+              }, 10000);
             e.target.reset();// limpia el formulario
           } else {
             // Si hay un error, muestra el mensaje de error
@@ -79,6 +82,7 @@
           console.error('Error generando código:', err);
           alert('Error inesperado');
         }
+        boton.disabled = false; // Vuelve a habilitar el botón
       });
     }
 
