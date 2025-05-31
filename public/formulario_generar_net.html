@@ -67,11 +67,14 @@
 
 
             divMensaje.classList.remove('oculto');
-            // Mostrar mensaje por 5 segundos
+            // Mostrar mensaje por 10 segundos
             setTimeout(() => {
              divMensaje.classList.add('oculto');
               }, 10000);
-            e.target.reset();// limpia el formulario
+
+    
+              e.target.querySelector('input[name="foto"]').value = ''; // Limpia el campo de archivo
+              e.target.querySelector('input[name="coordenadas"]').value = ''; // Limpia el campo de coordenadas
           } else {
             // Si hay un error, muestra el mensaje de error
             alert(' Error: ' + data.error);

@@ -17,17 +17,17 @@ app.use(session({
 
 //usuarion que tiene permitido usar al pagina
 const usuarios= [
-  { username: 'Tecjesus', password: 'jesushuox',rol:'tecnico' },
-  { username: 'Tecpedro', password: 'pedromenchu', rol:'tecnico' },
-  { username: 'Tecjulio', password: 'juliobarrios' , rol:'tecnico' },
-  { username: 'Tecjoseangel', password: 'joseangel' , rol:'tecnico' },
-  { username: 'Tecwalter', password: 'waltermerida' , rol:'tecnico' },
-  { username: 'Tecjorge', password: 'jorgegutierrez' , rol:'tecnico' },
-  { username: 'Tecjoseramirez', password: 'joseramirez' , rol:'tecnico' },
-  { username: 'Tecalex', password: 'alexlux' , rol:'tecnico' },
-  { username: 'Tecmarcos', password: 'marcoslopez' , rol:'tecnico' },
-  { username: 'Tecroman', password: 'romanxec' , rol:'tecnico' },
-  { username: 'Tecmelvin', password: 'melvinrojas' , rol:'tecnico' },
+  { username: 'chuzhuox@nettic', password: 'jesushuox',rol:'tecnico' },
+  { username: 'pedro.m@nettic', password: 'pedromenchu', rol:'tecnico' },
+  { username: 'j.cesaraquino@nettic', password: 'juliobarrios' , rol:'tecnico' },
+  { username: 'daniloangel@nettic', password: 'joseangel' , rol:'tecnico' },
+  { username: 'wmerida@nettic', password: 'waltermerida' , rol:'tecnico' },
+  { username: 'hroman@nettic', password: 'romanxec' , rol:'tecnico' },
+  { username: 'melvirojas@nettic', password: 'melvinrojas' , rol:'tecnico' },
+  { username: 'jorgegutierrez@nettic', password: 'jorgegutierrez' , rol:'tecnico' },
+  { username: 'oscars@nettic', password: 'oscarsomoza' , rol:'tecnico' },
+  { username: 'a.lux@nettic', password: 'alexlux' , rol:'tecnico' },
+  { username: 'marcoslopez@nettic', password: 'marcoslopez' , rol:'tecnico' },
   { username: 'despmarielos', password: 'marielos211' , rol:'despacho' },
 ];
 
