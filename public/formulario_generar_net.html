@@ -15,17 +15,17 @@
         <select name="nombre_cliente" id="Clientes">
             <option value="" disabled selected>SELECCIONE SU CLIENTE</option>
             <!-- las opciones son los nombres de los clientes -->
-            <option value="WENDY">WENDY ESMERALDA GRAMAJO DE LEON DE MIRANDA</option>
-            <option value="LUIS">LUIS ANGEL BATEN MONTERROSO</option>
-            <option value="EDGAR">EDGAR ARMIN RUIZ</option>
-            <option value="JESUS">JESUS ALBERTO ROMAN PEREZ CHOCHOM B</option>
-            <option value="HENRY">HENRY DAVID TIGUILA RIVERA</option>
-            <option value="LIDIA">LIDIA LISBETH MERIDA CHAVEZ DE LOPEZ</option>
-            <option value="IVAN">IVAN ALEXANDER PEREZ PALACIOS</option>
-            <option value="ALLAN">ALLAN REMYS ANDRADE ALVARADO</option>
-            <option value="SANTOS">SANTOS AMPARO ROSALES PEREZ DE MORALES</option>
-            <option value="EMERSSON">EMERSSON ABIMAEL SANTA Y VELAZQUES</option>
-            <option value="GILBERTO">GILBERTO ESTUARDO MONZON GONON</option>
+            <option id="1" value="WENDY">WENDY ESMERALDA GRAMAJO DE LEON DE MIRANDA</option>
+            <option id="2" value="LUIS">LUIS ANGEL BATEN MONTERROSO</option>
+            <option id="3" value="EDGAR">EDGAR ARMIN RUIZ</option>
+            <option id="4" value="JESUS">JESUS ALBERTO ROMAN PEREZ CHOCHOM B</option>
+            <option id="5" value="HENRY">HENRY DAVID TIGUILA RIVERA</option>
+            <option id="6" value="LIDIA">LIDIA LISBETH MERIDA CHAVEZ DE LOPEZ</option>
+            <option id="7" value="IVAN">IVAN ALEXANDER PEREZ PALACIOS</option>
+            <option id="8" value="ALLAN">ALLAN REMYS ANDRADE ALVARADO</option>
+            <option id="9" value="SANTOS">SANTOS AMPARO ROSALES PEREZ DE MORALES</option>
+            <option id="10" value="EMERSSON">EMERSSON ABIMAEL SANTA Y VELAZQUES</option>
+            <option id="11" value="GILBERTO">GILBERTO ESTUARDO MONZON GONON</option>
         </select required>
         <!--campor para agregar infomacion (input)-->
       <input type="text" id="coordenadas" name="coordenadas" placeholder="Coordenadas" required>
@@ -38,8 +38,17 @@
   <script>
     const formulario = document.getElementById('formulario');
     const boton = document.querySelector('button[type="submit"]');
-
     // restringe el acceso si se quiere acceder por link 
+
+    fetch('/bloqueados')
+    .then(res => res.json())
+    .then(bloqueados => {
+    bloqueados.forEach(id => {
+      const option = document.getElementById(id);
+      if (option) option.disabled = true;
+    });
+    });
+
     if (window.location.search.includes('despacho')) {
       document.body.innerHTML = '<h2>Solo personal autorizado puede acceder al formulario</h2>';
     } else {
@@ -47,6 +56,7 @@
       document.getElementById('formulario').addEventListener('submit', async (e) => {
         boton.disabled = true; // Deshabilita el botón para evitar múltiples envíos         
         e.preventDefault();// Evita el envío normal del formulario
+
         const formData = new FormData(e.target);//obtiene los datos del formulario
         try {
           //envia los datos del formulario al servidor usando fetch
@@ -59,6 +69,16 @@
             // Si se genera el código, muestra el codigo generado
             const divMensaje = document.getElementById('mensaje-exito');
             divMensaje.innerHTML = `Código generado: <span class="net">${data.codigo}</span>`;
+
+            const select = document.getElementById('Clientes');
+            const selectedOption = select.options[select.selectedIndex];
+            fetch('/bloquear-cliente', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: selectedOption.id })
+      });
+           selectedOption.disabled = true;
+           select.value = "";
 
             //codigo para copiar al portapapeles el net generado
             navigator.clipboard.writeText(data.codigo).then(() => {

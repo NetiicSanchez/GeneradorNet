@@ -85,6 +85,22 @@ app.get('/',protegido, (req, res) => {
 });
 
 
+app.get('/bloqueados', (req, res) => {
+  const bloqueados = JSON.parse(fs.readFileSync('bloqueado.json'));
+  res.json(bloqueados);
+});
+
+// Ruta para bloquear un cliente
+app.post('/bloquear-cliente', express.json(), (req, res) => {
+  const { id } = req.body;
+  let bloqueados = JSON.parse(fs.readFileSync('bloqueado.json'));
+  if (!bloqueados.includes(id)) {
+    bloqueados.push(id);
+    fs.writeFileSync('bloqueado.json', JSON.stringify(bloqueados));
+  }
+  res.json({ ok: true });
+});
+
 
 async function startServer() {
     try {
