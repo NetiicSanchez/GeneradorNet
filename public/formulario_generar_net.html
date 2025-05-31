@@ -78,7 +78,7 @@
             body: JSON.stringify({ id: selectedOption.id })
       });
            selectedOption.disabled = true;
-           select.value = "";
+          select.value = "";
 
             //codigo para copiar al portapapeles el net generado
             navigator.clipboard.writeText(data.codigo).then(() => {
