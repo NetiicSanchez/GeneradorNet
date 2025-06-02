@@ -86,17 +86,15 @@ app.get('/',protegido, (req, res) => {
 
 app.get('/clientes-disponibles', protegido, async (req, res) => {
   const todos = [
-    "WENDY ESMERALDA GRAMAJO DE LEON DE MIRANDA",
-    "LUIS ANGEL BATEN MONTERROSO",
-    "EDGAR ARMIN RUIZ",
-    "JESUS ALBERTO ROMAN PEREZ CHOCHOM B",
-    "HENRY DAVID TIGUILA RIVERA",
-    "LIDIA LISBETH MERIDA CHAVEZ DE LOPEZ",
-    "IVAN ALEXANDER PEREZ PALACIOS",
-    "ALLAN REMYS ANDRADE ALVARADO",
-    "SANTOS AMPARO ROSALES PEREZ DE MORALES",
-    "EMERSSON ABIMAEL SANTA Y VELAZQUES",
-    "GILBERTO ESTUARDO MONZON GONON"
+    "HERMAN ELADIO SANCHEZ CIFUENTES",
+    "FLORIDALMA PUAC DE LEON",
+    "TANIA ESMERALDA MERIDA MONZON",
+    "CRISTIAN JOSUE RECINOS MARROQUIN",
+    "EDGAR ALFREDO DE LEON SALAZAR",
+    "RUMALDA ROSARIO AGUSTIN",
+    "MAYNOR ABEL HERNANDEZ CHAN",
+    "MIGUEL AGUARE SOC",
+    "NILSON JAVIER FUENTES MURGA B"
   ];
   const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
   const usadosSet = new Set(usados.map(c => c.nombre_cliente));
