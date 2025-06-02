@@ -17,6 +17,7 @@ app.use(session({
 
 //usuarion que tiene permitido usar al pagina
 const usuarios= [
+  { username: 'ADMIN', password: 'admin2025',rol:'tecnico' },
   { username: 'chuzhuox@nettic', password: 'jesushuox',rol:'tecnico' },
   { username: 'pedro.m@nettic', password: 'pedromenchu', rol:'tecnico' },
   { username: 'j.cesaraquino@nettic', password: 'juliobarrios' , rol:'tecnico' },
