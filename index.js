@@ -87,8 +87,6 @@ app.get('/',protegido, (req, res) => {
 
 app.get('/clientes-disponibles', protegido, async (req, res) => {
   const todos = [
-    "PRUEBA DE NETTIC 1",
-    "PRUEBA DE NETTIC 2",
     "HERMAN ELADIO SANCHEZ CIFUENTES",
     "FLORIDALMA PUAC DE LEON",
     "TANIA ESMERALDA MERIDA MONZON",
