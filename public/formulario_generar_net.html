@@ -22,6 +22,7 @@
       <!-- el validacioncoordenadas en una funcion que tiene una expresion regular -->
       <button type="submit" onclick="validacionCoordenadas()">Generar Código NET</button>
     </form>
+    <div id="cargando" class="oculto">Cargando Codigo NET Espera un momento....</div>
   </div>
 
   <script>
@@ -36,6 +37,8 @@
       document.getElementById('formulario').addEventListener('submit', async (e) => {
         boton.disabled = true; // Deshabilita el botón para evitar múltiples envíos         
         e.preventDefault();// Evita el envío normal del formulario
+        const divCargando = document.getElementById('cargando');
+        divCargando.classList.remove('oculto'); // Muestra el mensaje de carga
         const formData = new FormData(e.target);//obtiene los datos del formulario
         try {
           //envia los datos del formulario al servidor usando fetch
@@ -45,6 +48,7 @@
           });
           const data = await res.json();
           if (data.codigo) {
+
             // Si se genera el código, muestra el codigo generado
             const divMensaje = document.getElementById('mensaje-exito');
             divMensaje.innerHTML = `Código generado: <span class="net">${data.codigo}</span>`;
@@ -73,6 +77,8 @@
           // Maneja cualquier error inesperado
           console.error('Error generando código:', err);
           alert('Error inesperado');
+        }finally {
+          divCargando.classList.add('oculto'); // Oculta el mensaje de carga
         }
         boton.disabled = false; // Vuelve a habilitar el botón
       });
