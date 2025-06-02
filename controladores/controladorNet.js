@@ -23,7 +23,7 @@ const enlaceFoto = req.file?.path;;
 
     // Obtener último código
     const ultimo = await CodigoNet.findOne({ order: [['idcodigonet', 'DESC']] });
-    const nuevoCodigo = siguienteCodigo(ultimo?.codigo_net || "NET13457");
+    const nuevoCodigo = siguienteCodigo(ultimo?.codigo_net || "NET13455");
 
     // Guardar en la base de datos
     const nuevo = await CodigoNet.create({
