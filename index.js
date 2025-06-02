@@ -3,7 +3,7 @@ const sequelize = require('./configuracion/db');//nos sirve para conectar a la b
 const path = require('path');// nos sirve para manejar rutas de archivos
 const app = express();
 const session = require ('express-session');// nos sirve para manejar sesiones  
-
+const CodigoNet = require('./modelos/codigoNet');
 app.use(express.urlencoded({ extended: true })); // para poder recibir datos del formulario
 app.use(session({
   secret:'clave-secreta', // clave secreta para firmar la sesión
@@ -82,6 +82,26 @@ const port = process.env.PORT || 3000; // puerto en el que va a correr el servid
 
 app.get('/',protegido, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'formulario_generar_net.html'));
+});
+
+app.get('/clientes-disponibles', protegido, async (req, res) => {
+  const todos = [
+    "WENDY ESMERALDA GRAMAJO DE LEON DE MIRANDA",
+    "LUIS ANGEL BATEN MONTERROSO",
+    "EDGAR ARMIN RUIZ",
+    "JESUS ALBERTO ROMAN PEREZ CHOCHOM B",
+    "HENRY DAVID TIGUILA RIVERA",
+    "LIDIA LISBETH MERIDA CHAVEZ DE LOPEZ",
+    "IVAN ALEXANDER PEREZ PALACIOS",
+    "ALLAN REMYS ANDRADE ALVARADO",
+    "SANTOS AMPARO ROSALES PEREZ DE MORALES",
+    "EMERSSON ABIMAEL SANTA Y VELAZQUES",
+    "GILBERTO ESTUARDO MONZON GONON"
+  ];
+  const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
+  const usadosSet = new Set(usados.map(c => c.nombre_cliente));
+  const disponibles = todos.filter(nombre => !usadosSet.has(nombre));
+  res.json(disponibles);
 });
 
 
