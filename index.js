@@ -30,6 +30,8 @@ const usuarios= [
   { username: 'a.lux@nettic', password: 'alexlux' , rol:'tecnico' },
   { username: 'marcoslopez@nettic', password: 'marcoslopez' , rol:'tecnico' },
   { username: 'despmarielos', password: 'marielos211' , rol:'despacho' },
+  { username: 'despnery', password: 'nerygomez', rol:'despacho' },
+  
 ];
 
 app.post('/login', (req, res) => {
