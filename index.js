@@ -102,7 +102,8 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "SONIA RODRIGUEZ CIFUENTES DE PEREZ",
     "JUANA LETICIA RAMOS AGUILAR",
     "OLGA MAYELA YANES BARRIOS",
-    "JUANA JANETH QUICHE QUICHE"
+    "JUANA JANETH QUICHE QUICHE",
+    "EDGAR EMILIO PALACIOS GRANADOS",
 
   ];
   const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
