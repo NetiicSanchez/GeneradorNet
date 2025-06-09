@@ -104,7 +104,9 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "OLGA MAYELA YANES BARRIOS",
     "JUANA JANETH QUICHE QUICHE",
     "EDGAR EMILIO PALACIOS GRANADOS",
-
+    "JOSUE OSWALDO PEREZ",
+    "SAIRA ABIGAIL HERNANDEZ CRISOLOGO B",
+    "ANGEL MOLINA PEREZ",
   ];
   const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
   const usadosSet = new Set(usados.map(c => c.nombre_cliente));
