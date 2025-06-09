@@ -93,13 +93,16 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "LUIS DAVID HERNANDEZ IXCHOP",
     "KARLA CRISTINA XIC SANCHEZ DE DIEGO",
     "CINDY CAROLINA SANCHEZ MELGAR",
-    "	JOSE ERNESTO POZ AJU",
+    "JOSE ERNESTO POZ AJU",
     "DANIA VALESKA RODAS MENESES",
     "ROLANDO RODRIGO TUM CAHUEX",
     "JHOSELYNE MARIA OLIVAR MINERA DE ROSARIO",
     "MARGARITA IZABEL PORTILLO LARA",
     "SONIA RODRIGUEZ CIFUENTES DE PEREZ",
     "JUANA LETICIA RAMOS AGUILAR",
+    "OLGA MAYELA YANES BARRIOS",
+    "JUANA JANETH QUICHE QUICHE"
+
   ];
   const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
   const usadosSet = new Set(usados.map(c => c.nombre_cliente));
