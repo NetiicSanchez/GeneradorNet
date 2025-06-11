@@ -106,6 +106,21 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "CHRISTIAN PETRONILO VAIL SHOJOM",
     "JENIFFER JULISSA SACAYON IXMAY",
     "ROSA ELIZABETH SONTAY ZUN DE TAJIBOY",
+    "CATARINA TUMIN DE CHAVEZ",
+    "FIDEL LOPEZ LOPEZ",
+    "SONIA JUDITH GALINDO CANCINOS",
+    "LESTER SAUL LOPEZ ARDON",
+    "HECTOR ZARATE PORRES",
+    "LILIA YAMILA ANAHI SOLORZANO CHAPERNO",
+    "LINDSAY NAHOMI PU GERONIMO",
+    "EVANGELINA GOMEZ AJTUN DE ZARAT",
+    "OSCAR WALDEMAR LOPEZ MARROQUIN",
+
+
+
+
+
+
   ];
   const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
   const usadosSet = new Set(usados.map(c => c.nombre_cliente));
