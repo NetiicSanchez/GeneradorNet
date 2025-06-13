@@ -106,7 +106,8 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "FIDELINA VASQUEZ LAJPOP",
     "ANA DELFINA FUENTES RIVAS",
     "	JUAN CARLOS CHOJOLAN MAZARIEGOS B",
-    "DEISY ALICIA PU GARCIA DE VALIENTE"
+    "DEISY ALICIA PU GARCIA DE VALIENTE",
+    "HOTEL ASTOR"
    
     
   ];
