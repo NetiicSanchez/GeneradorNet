@@ -101,7 +101,14 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "BYRON DAVID FUENTES US",
     "ESVIN AMILCAR ARDON CASTILLO",
     "HILDA LUCRECIA CUX ALONZO",
-    "ANGELA VIRGINIA MALDONADO CANIL DE CALDERON"
+    "ANGELA VIRGINIA MALDONADO CANIL DE CALDERON",
+    "SAMUEL ISAIAS XILOJ TOMA",
+    "FIDELINA VASQUEZ LAJPOP",
+    "ANA DELFINA FUENTES RIVAS",
+    "	JUAN CARLOS CHOJOLAN MAZARIEGOS B",
+    "DEISY ALICIA PU GARCIA DE VALIENTE"
+   
+    
   ];
   const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
   const usadosSet = new Set(usados.map(c => c.nombre_cliente));
