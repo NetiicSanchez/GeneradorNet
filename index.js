@@ -105,7 +105,8 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "INGRID PATRICIA RAMOS MATTA DE REYES",
     "OSCAR VINICIO DE LEON RUIZ",
     "ISAIAS MEJIA PU",
-    "MARIA DEL ROSARIO ESPINOZA GONON"
+    "MARIA DEL ROSARIO ESPINOZA GONON",
+    "FERNANDO ARTURO MORALES AGUILA"
 
 
    
