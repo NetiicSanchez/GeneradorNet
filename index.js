@@ -118,7 +118,10 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "JUAN REYES PEREZ",
     "ABEL VELASQUEZ CHAY",
     "RUDY ALEXANDER CASTILLO ORDOÑEZ",
-    "GLORIA ESPERANZA PELICÓ AJPOP"
+    "GLORIA ESPERANZA PELICÓ AJPOP",
+    "GABRIEL PEREZ GOMEZ",
+    "CAMARAS PARQUEO PALMAR"
+
 
   ];
   const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
