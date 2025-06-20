@@ -120,7 +120,8 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "RUDY ALEXANDER CASTILLO ORDOÑEZ",
     "GLORIA ESPERANZA PELICÓ AJPOP",
     "GABRIEL PEREZ GOMEZ",
-    "CAMARAS PARQUEO PALMAR"
+    "CAMARAS PARQUEO PALMAR",
+    "HUGO LEONEL REVOLORIO LOPEZ"
 
 
   ];
