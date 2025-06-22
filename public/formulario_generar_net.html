@@ -17,8 +17,10 @@
             <!-- las opciones son los nombres de los clientes -->
         </select required>
         <!--campor para agregar infomacion (input)-->
-      <input type="text" id="coordenadas" name="coordenadas" placeholder="Coordenadas" required>
-      <input type="file"  name="foto" accept="image/*" required>
+      <input type="text" id="coordenadas" name="coordenadas" placeholder="Coordenadas" > <!-- volver a ponerlo en requerido -->
+      <input type="file"  name="foto" accept="image/*" > <!-- volver a ponerlo en requerido -->
+
+      
       <!-- el validacioncoordenadas en una funcion que tiene una expresion regular -->
       <button type="submit" onclick="validacionCoordenadas()">Generar Código NET</button>
     </form>
