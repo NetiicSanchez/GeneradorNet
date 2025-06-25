@@ -5,6 +5,8 @@ const app = express();
 const session = require ('express-session');// nos sirve para manejar sesiones  
 const CodigoNet = require('./modelos/codigoNet');
 app.use(express.urlencoded({ extended: true })); // para poder recibir datos del formulario
+
+
 app.use(session({
   secret:'clave-secreta', // clave secreta para firmar la sesión
   resave: false, // no volver a guardar la sesión si no ha habido cambios
@@ -94,35 +96,20 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
   const todos = [
 
     "MELANY HAYDEE LUCAS PEREZ",
-    "JUSTA ENRIQUETA SANTAY IXCOY DE CHANAX",
-    "JUAN REYES PEREZ",
-    "CAMARAS PARQUEO PALMAR",
-    "JUAN RAMIREZ OROZCO",
-    "CRISTIAN ALEXANDER PAREDES LOPEZ",
-    "DANIELA ESMERALDA GONZALES AJ",
-    "BAGNER ELIU GARCIA LOPEZ",
-    "JENIFER YESENIA SAENZ CORADO",
-    "DAMARIS ARACELY AGUSTIN MARTIN",
-    "WILSON SAUL LOPEZ RODAS",
-    "LUIS FIDEL HERNANDEZ RAMIREZ",
-    "MARIA ELOIZA SANCHEZ JUAREZ",
-    "WILMER EMERSON LOPEZ PEREZ",
-    "JULIO BASILIO GOMEZ",
-    "AMILCAR NEFTALI LOPEZ RAMIREZ",
-    "RAUL GABRIEL ESCOBAR VALLE",
-    "LUIS ALFREDO REYES RAYMUNDO",
-    "PABLO OSWALDO SOLOMAN SAQUIC",
     "NANCY YANIRA ALONZO HERNANDEZ",
-    "SANDRA MARISOL SALAZAR TUMACAJ",
     "FREDY ROBERTO CUX GUTIERREZ",
     "MARVIN GILBERTO ESCOBAR ROSOTTO",
     "INGRID ANNABELY SANCHEZ VELASQUEZ F",
     "JEREMIAS MENDEZ",
-    "ABNER ARIEL ARDON CASTILLO B"
+    "ABNER ARIEL ARDON CASTILLO B",
+    "JESSICA BRIYIT CIFUENTES",
+    "MULTI NEGOCIOS NISSI S.A.",
+    "VILMA HERMELINDA AJANEL XILOJ",
+    "BYRON PEREZ GONZALEZ",
+    "YULISSA CARINO PEREZ CANIL DE YAGUT",
+    "KIMBERLY GUADALUPE RUIZ GOMEZ DE MAZARIEGOS",
 
-
-
-
+   
 
   ];
 
