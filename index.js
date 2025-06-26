@@ -108,7 +108,8 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "BYRON PEREZ GONZALEZ",
     "YULISSA CARINO PEREZ CANIL DE YAGUT",
     "KIMBERLY GUADALUPE RUIZ GOMEZ DE MAZARIEGOS",
-
+    "NICOLAS LOPEZ Y LOPEZ"
+    
    
 
   ];
