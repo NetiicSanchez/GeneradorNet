@@ -107,7 +107,8 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "JORGE MARIO CABINAL VELASQUEZ",
     "JOSE LUIS MOH JUAREZ",
     "HUGO ALBERTO MORA BARRIENTOS",
-    "CARMEN VICTORIA SANTOS AGUILAR"
+    "CARMEN VICTORIA SANTOS AGUILAR",
+    "JOSE LUIS MOH JUAREZ",
   ];
 
 
