@@ -104,7 +104,10 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "YONY SAEL OVALLE GARCIA",
     "JOSE CARLOS OVALLE CARDENAS",
     "ANDY LEONARDO ROMAN BARRIOS",
-    "LEYDI DANIRA SUNUM COSIGUA"
+    "LEYDI DANIRA SUNUM COSIGUA",
+    "FRANCISCA LOPEZ BARRIOS"
+
+
     
 
   
