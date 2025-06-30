@@ -102,7 +102,8 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "GERSON ISAAC OSORIO JOCOL",
     "YERALDY CRISTABEL CUXEVA AMAYA",
     "RUTH NOEMI MAZARIEGOS JERONIMO",
-    "JOSE EMANUEL TORRES AVILA"
+    "JOSE EMANUEL TORRES AVILA",
+    "JUSTA ENRIQUETA SANTAY IXCOY DE CHANAX"
   
   ];
 
