@@ -111,7 +111,8 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "CESAR ERNESTO CASTANEDA ORDONEZ",
     "CARLOS VIDAL HERNANDEZ GARCIA",
     "MARIO DAVID REYES REYES",
-    "LUIS FERNANDO MARTINEZ MENDEZ"
+    "LUIS FERNANDO MARTINEZ MENDEZ",
+    "ZOILA ALEJANDRA JEREZ JEREZ"
 
   ];
 
