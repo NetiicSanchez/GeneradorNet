@@ -106,7 +106,8 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "MISHEL BETZABE DE LA CRUZ LEPE",
     "SARA ADELINA CHAVEZ PAXTOR DE GARCIA	",
     "MARIA ISABEL CHAY PUAC",
-    "SERGIO FERNANDO GARCIA PACAY"
+    "SERGIO FERNANDO GARCIA PACAY",
+    "ANNELIESSE  AGUIRRE ALVARADO DE COCA"
 
   ];
 
