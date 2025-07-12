@@ -108,8 +108,13 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "CESAR ENRIQUE REYNOSO LOPEZ B",
     "BLANCA SONIA GUTIERREZ REYES",
     "GABRIEL ALFREDO FRANCO PU",
-    "RIGOBERTO VENTURA VASQUEZ PEREZ"
-
+    "RIGOBERTO VENTURA VASQUEZ PEREZ",
+    "WILFREDO WALDEMAR BOLAÑOS PEÑA",
+    "SARA ALEJANDRA CUELLAR FONG",
+    "SHARON MERIBETH MORALES RAMIREZ",
+    "EMERSON ELIAS IXCOY LORENZO",
+    "ZUCELY ADALI SANTOS GONZALEZ",
+    "YESENIA NOHEMI DE LEON LOPEZ"
   ];
 
   const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
