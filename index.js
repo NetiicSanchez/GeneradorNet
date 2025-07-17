@@ -103,6 +103,7 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "ANGEL MIGUEL GARCIA FLORES",
     "JERONIMO XANTE TOC",
     "DENILSON ANTONIO CHICAS ARGUETA",
+    "SAMUEL ISAIAS HERNANDEZ",
   ];
 
   const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
