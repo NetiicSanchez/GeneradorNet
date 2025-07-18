@@ -95,15 +95,13 @@ app.get('/',protegido, (req, res) => {
 app.get('/clientes-disponibles', protegido, async (req, res) => {
   const todos = [
     "DANA PAOLA JUAREZ TZUN",
-    "ALEJO BAUTISTA PEREZ",
-    "OBED ABRAHAM NAVAS MORAN",
-    "ALFONSO BATEN ELIAS",
-    "ROXANA QUILA PEREZ DE OROZCO",
     "GILMA HAYDEE RAMIREZ DE LA CRUZ DE BARRERA",
     "ANGEL MIGUEL GARCIA FLORES",
-    "JERONIMO XANTE TOC",
-    "DENILSON ANTONIO CHICAS ARGUETA",
-    "SAMUEL ISAIAS HERNANDEZ",
+    "YEIMY YADIRA ALVARADO RODAS",
+    "ROSA AMELIA HERNANDEZ XIVIR",
+    "OLGA MARINA BENITEZ MIRANDA DE JIMENEZ",
+    "SAULO ELEAZAR PEREZ PEREZ"
+  
   ];
 
   const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
