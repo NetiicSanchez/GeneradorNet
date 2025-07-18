@@ -100,7 +100,8 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "YEIMY YADIRA ALVARADO RODAS",
     "ROSA AMELIA HERNANDEZ XIVIR",
     "OLGA MARINA BENITEZ MIRANDA DE JIMENEZ",
-    "SAULO ELEAZAR PEREZ PEREZ"
+    "SAULO ELEAZAR PEREZ PEREZ",
+    "JOSE VICENTE ORELLANA MARTINEZ"
   
   ];
 
