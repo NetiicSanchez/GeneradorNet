@@ -104,7 +104,8 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "GREISI MARIA SANTIAGO ARDON DE DONIS",
     "BEVERLYN NOEMI SANDOVAL TORRES",
     "VILMA CUX CASTRO DE DE LEON",
-    "MARVIN SEBASTIAN SAQUIC"
+    "MARVIN SEBASTIAN SAQUIC",
+    "ROSA AURA OCHOA CETINO"
   ];
 
   const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
