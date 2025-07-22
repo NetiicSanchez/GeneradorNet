@@ -95,12 +95,16 @@ app.get('/',protegido, (req, res) => {
 app.get('/clientes-disponibles', protegido, async (req, res) => {
   const todos = [
     "ESTUARDO ANTONIO GABET LINARES",
-    "MARIBEL VICENTE GUERRERO DE TUMACAJ",
-    "MELVIN WILSON LOPEZ OTUC",
-    "KATHERIN ELIZABETH NOHEMI PUAC LOPEZ",
-    "FÁTIMA YANETH AJANEL MORAN",
-    "EDDY AHILON VELASQUEZ",
-    "CESAR DAVID GOMEZ IXCOY"
+    "IRMA YOJANA GARCIA SUN",
+    "MARIA ELENA LOPEZ PELICO DE LOPEZ",
+    "DANIEL ISAÍAS AGUILAR LÓPEZ",
+    "OSCAR GAMADIEL SOLIS TECUN",
+    "BASILIO ANASTACIO VASQUEZ CHUM",
+    "EDUARDO DE JESUS ALPIREZ PAREDES",
+    "GREISI MARIA SANTIAGO ARDON DE DONIS",
+    "BEVERLYN NOEMI SANDOVAL TORRES",
+    "VILMA CUX CASTRO DE DE LEON",
+    "MARVIN SEBASTIAN SAQUIC"
   ];
 
   const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
