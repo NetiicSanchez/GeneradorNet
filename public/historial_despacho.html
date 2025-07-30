@@ -11,30 +11,54 @@
     <h1>Historial de Códigos NET</h1>
     <input type="text" id="buscar" placeholder="Buscar código NET...">
     <ul id="historial"></ul>
+    <div id="paginacion" style="margin-top:20px; text-align:center;">
+      <button id="anterior">Anterior</button>
+      <span id="pagina-actual"></span>
+      <button id="siguiente">Siguiente</button>
+    </div>
   </div>
 
   <script>
-      async function cargarHistorial() {
-        try {
-          const res = await fetch('/historial-net');
-          const lista = await res.json();
-          const contenedor = document.getElementById('historial');
-          contenedor.innerHTML = '';
-          lista.forEach(item => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-              <strong>${item.codigo_net}</strong><br>
-              Cliente: ${item.nombre_cliente}<br>
-              Coordenadas: ${item.coordenadas}<br>
-              <img src="${item.foto}" alt="Foto del cliente">
-              <a href="${item.foto}" target="_blank">Ver foto</a>
-            `;
-            contenedor.appendChild(li);
-          });
-        } catch (err) {
-          console.error('Error al cargar historial:', err);
-        }
+    let pagina = 1;
+    const limite = 10; // Cambia este valor si quieres más o menos registros por página
+
+    async function cargarHistorial() {
+      try {
+        const res = await fetch(`/historial-net?page=${pagina}&limit=${limite}`);
+        const { lista, totalPaginas } = await res.json();
+        const contenedor = document.getElementById('historial');
+        contenedor.innerHTML = '';
+        lista.forEach(item => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <strong>${item.codigo_net}</strong><br>
+            Cliente: ${item.nombre_cliente}<br>
+            Coordenadas: ${item.coordenadas || ''}<br>
+            <img src="${item.foto}" alt="Foto del cliente" loading="lazy" style="max-width:200px;max-height:200px;"><br>
+            <a href="${item.foto}" target="_blank">Ver foto</a>
+          `;
+          contenedor.appendChild(li);
+        });
+        document.getElementById('pagina-actual').textContent = `Página ${pagina} de ${totalPaginas}`;
+        document.getElementById('anterior').disabled = pagina === 1;
+        document.getElementById('siguiente').disabled = pagina === totalPaginas;
+      } catch (err) {
+        console.error('Error al cargar historial:', err);
       }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('anterior').addEventListener('click', () => {
+        if (pagina > 1) {
+          pagina--;
+          cargarHistorial();
+        }
+      });
+
+      document.getElementById('siguiente').addEventListener('click', () => {
+        pagina++;
+        cargarHistorial();
+      });
 
       document.getElementById('buscar').addEventListener('input', () => {
         const filtro = document.getElementById('buscar').value.toLowerCase();
@@ -45,7 +69,4 @@
       });
 
       cargarHistorial();
-    
-  </script>
-</body>
-</html>
+    });

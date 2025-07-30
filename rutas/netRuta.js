@@ -5,10 +5,33 @@ const router = express.Router();
 const { storage } = require('../configuracion/cloudinary');
 const upload = multer({ storage });
 
-const { generarNet, historialNet } = require('../controladores/controladorNet');
+const CodigoNet = require('../modelos/codigoNet');
+const { generarNet } = require('../controladores/controladorNet');
 
-router.post('/generar-net', upload.single('foto'), generarNet);// el nombre del campo en el formulario es 'foto'
+// Endpoint para generar NET
+router.post('/generar-net', upload.single('foto'), generarNet);
 router.get('/generar-net', generarNet);
-router.get('/historial-net', historialNet);
 
-module.exports = router;
+// Endpoint paginado para historial-net
+router.get('/historial-net', async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
+  try {
+    const { count, rows } = await CodigoNet.findAndCountAll({
+      order: [['createdAt', 'DESC']],
+      limit,
+      offset
+    });
+
+    const totalPaginas = Math.ceil(count / limit);
+
+    res.json({
+      lista: rows,
+      totalPaginas
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener el historial' });
+  }
+});

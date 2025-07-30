@@ -9,9 +9,14 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
-    folder: 'fotosNET',
-    allowed_formats: ['jpg', 'png', 'jpeg']
+  params: async (req, file) => {
+    // Si el código NET viene en el formulario, úsalo como nombre de la imagen
+    // Si no, puedes dejarlo como undefined y luego renombrar en el controlador
+    return {
+      folder: 'fotosNET',
+      allowed_formats: ['jpg', 'png', 'jpeg'],
+      public_id: req.body.codigo_net // El nombre de la imagen será el código NET
+    };
   }
 });
 
