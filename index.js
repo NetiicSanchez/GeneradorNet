@@ -137,4 +137,4 @@ async function startServer() {
   startServer();    
 
 const netRuta = require('./rutas/netRuta');
-app.use('/', netRuta);
+app.use( netRuta);

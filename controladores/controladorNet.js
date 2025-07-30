@@ -40,7 +40,7 @@ const generarNet = async (req, res) => {
       nombre_cliente,
       coordenadas,
       foto: fotoUrl,
-      enviado_por: req.session.usuario || 'desconocido'
+      enviado_por: req.session?.usuario || 'desconocido'
     });
 
     res.json({
