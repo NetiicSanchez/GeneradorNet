@@ -4,8 +4,9 @@ const path = require('path');// nos sirve para manejar rutas de archivos
 const app = express();
 const session = require ('express-session');// nos sirve para manejar sesiones  
 const CodigoNet = require('./modelos/codigoNet');
-app.use(express.urlencoded({ extended: true })); // para poder recibir datos del formulario
+const fetch = require('node-fetch'); // npm install node-fetch
 
+app.use(express.urlencoded({ extended: true })); // para poder recibir datos del formulario
 
 app.use(session({
   secret:'clave-secreta', // clave secreta para firmar la sesión
@@ -14,7 +15,6 @@ app.use(session({
   cookie:{
     maxAge:20 * 60 * 1000 // tiempo de expiración de la sesión en milisegundos (20 minutos)
   }
-
 }))
 
 //usuarion que tiene permitido usar al pagina
@@ -36,7 +36,6 @@ const usuarios= [
   { username: 'despmarielos', password: 'marielos211' , rol:'despacho' },
   { username: 'despnery', password: 'nerygomez', rol:'despacho' },
   { username: 'jcpelico', password: 'juanpelico', rol:'despacho' },
-  
 ];
 
 app.post('/login', (req, res) => {
@@ -44,16 +43,17 @@ app.post('/login', (req, res) => {
   const autorizado = usuarios.find(user => user.username === username && user.password === password);
 
   if (autorizado) {
-  req.session.usuario = autorizado.username;
-  req.session.rol = autorizado.rol; // Guardar el rol del usuario en la sesión
-  if (autorizado.rol === 'tecnico') {
-    res.redirect('/formulario_generar_net.html'); // Redirigir a la página del técnico
-  } else if (autorizado.rol === 'despacho') {
-    res.redirect('/historial_despacho.html'); // Redirigir a la página del despacho
-
-  }else{
+    req.session.usuario = autorizado.username;
+    req.session.rol = autorizado.rol; // Guardar el rol del usuario en la sesión
+    if (autorizado.rol === 'tecnico') {
+      res.redirect('/formulario_generar_net.html'); // Redirigir a la página del técnico
+    } else if (autorizado.rol === 'despacho') {
+      res.redirect('/historial_despacho.html'); // Redirigir a la página del despacho
+    } else {
+      res.send('Usuario o contraseña incorrectos');
+    }
+  } else {
     res.send('Usuario o contraseña incorrectos');
-  }
   }
 });
 
@@ -92,58 +92,46 @@ app.get('/',protegido, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'formulario_generar_net.html'));
 });
 
+// NUEVO: Obtener clientes disponibles automáticamente desde Whisphub (instalaciones)
 app.get('/clientes-disponibles', protegido, async (req, res) => {
-  const todos = [
-    "LUISA FERNANDA GONZALEZ CABRERA DE KESTLER",
-    "NELSON OLIVER JUAREZ CABRERA",
-    "MEILI DALILA VELASQUEZ LOPEZ",
-    "OSCAR GUILLERMO RODAS MONZON",
-    "FRANCISCO WALDEMAR MACHIC TUCH",
-    "MIGUEL ABRAHAM GRANADOS REYES",
-    "DAVID ARSENIO MAZARIEGOS CHACAJ",
-    "ROCIO GABRIELA GUZMAN ZEPEDA",
-    "TEÓFILO FERNANDO DÍAZ AGUILAR",
-    "VERONICA ANGELINA LOPEZ COCHAJIL",
-    "LUZ OFELIA MACHIC BELTRAN",
-    "RUGBY ANALY ALVINO CAMEY DE CALDERON",
-    "AXEL EMANUEL GIRON CANIL",
-    "ELVIA SULINA POZ CALEL DE DE LEON",
-    "BRISNA LYLI LOPEZ PAXTOR",
-    "ANNELYN CHARLENE CASTILLO BARRIOS",
-    "DORIS BEATRIZ JUAREZ LOPEZ",
-    "MARTIN MIGUEL HERRERA TOMAS",
-    "FRANCISCA DE JESUS HERNANDEZ QUICHE",
-    "DIRECCION DEPARTAMENTAL DE REDES INTEGRADAS EL QUETZAL",
-    "	ERIKA YULISA BELTETON RUIZ"
+  try {
+    const API_URL = 'https://api.wisphub.io/instalaciones?limit=1000&offset=0';
+    const API_KEY = 'CIPHqpe5.efkWsPk0wVAXpdYvivIFESiIpwWfWZqV';
+    const response = await fetch(API_URL, {
+      headers: {
+        'Authorization': `Api-Key ${API_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await response.json();
+    const instalaciones = data.results || data;
 
+    const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
+    const usadosSet = new Set(usados.map(c => c.nombre_cliente));
 
-
-  ];
-
-  const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
-  const usadosSet = new Set(usados.map(c => c.nombre_cliente));
-  const disponibles = todos.filter(nombre => !usadosSet.has(nombre));
-  res.json(disponibles);
+    // Puedes devolver más datos si lo necesitas, aquí solo el nombre:
+    const disponibles = instalaciones.filter(inst => !usadosSet.has(inst.nombre));
+    res.json(disponibles.map(inst => inst.nombre));
+  } catch (error) {
+    console.error('Error obteniendo instalaciones:', error);
+    res.status(500).json({ error: 'Error obteniendo instalaciones' });
+  }
 });
 
-
-
 async function startServer() {
-    try {
-      await sequelize.authenticate();
-      console.log('Conexión a PostgreSQL exitosa');
-
-      await sequelize.sync(); // Sincronizar modelos con la base de datos
-      console.log('Modelos sincronizados con la base de datos');
-
-      app.listen(port, () => {
-        console.log(`Servidor corriendo en http://localhost:${port}`);
-      });
-    } catch (error) {
-      console.error('Error al conectar a PostgreSQL:', error);
-    }
+  try {
+    await sequelize.authenticate();
+    console.log('Conexión a PostgreSQL exitosa');
+    await sequelize.sync();
+    console.log('Modelos sincronizados con la base de datos');
+    app.listen(port, () => {
+      console.log(`Servidor corriendo en http://localhost:${port}`);
+    });
+  }catch (error) {
+    console.error('Error al conectar a PostgreSQL:', error);
   }
-  startServer();    
+}
+startServer();
 
 const netRuta = require('./rutas/netRuta');
-app.use( netRuta);
+app.use(netRuta);
