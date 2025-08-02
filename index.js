@@ -4,7 +4,7 @@ const path = require('path');// nos sirve para manejar rutas de archivos
 const app = express();
 const session = require ('express-session');// nos sirve para manejar sesiones  
 const CodigoNet = require('./modelos/codigoNet');
-const fetch = require('node-fetch'); // npm install node-fetch
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 app.use(express.urlencoded({ extended: true })); // para poder recibir datos del formulario
 
@@ -103,7 +103,11 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
         'Content-Type': 'application/json'
       }
     });
-    const data = await response.json();
+    const text = await response.json();
+       console.log('Respuesta Whisphub:', text); // <-- Agrega esto
+    const data = JSON.parse(text);
+
+
     const instalaciones = data.results || data;
 
     const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
