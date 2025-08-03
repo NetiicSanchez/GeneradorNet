@@ -97,7 +97,7 @@ app.get('/',protegido, (req, res) => {
 // <-- CÓDIGO MODIFICADO -->
 app.get('/clientes-disponibles', protegido, async (req, res) => {
   try {
-    const API_URL = 'https://api.wisphub.io/instalaciones?limit=1000&offset=0';
+    const API_URL = 'https://api.wisphub.net/api/clientes/';
     const API_KEY = 'CIPHqpe5.efkWsPk0wVAXpdYvivIFESiIpwWfWZqV';
     const response = await fetch(API_URL, {
       headers: {
@@ -111,24 +111,24 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     }
 
     const data = await response.json();
-    console.log('Respuesta de Whisphub:', JSON.stringify(data)); // <-- AGREGA ESTE LOG
+    console.log('Respuesta de Whisphub:', JSON.stringify(data));
 
-    const instalaciones = data.results || data;
+    // Ajusta el nombre del campo según la respuesta real
+    const clientes = data.results || data;
 
     const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
     const usadosSet = new Set(usados.map(c => c.nombre_cliente));
 
-    const disponibles = instalaciones
-      .filter(inst => inst.nombre && !usadosSet.has(inst.nombre))
-      .map(inst => inst.nombre);
+    const disponibles = clientes
+      .filter(cliente => cliente.nombre && !usadosSet.has(cliente.nombre))
+      .map(cliente => cliente.nombre);
 
     res.json(disponibles);
   } catch (error) {
-    console.error('Error obteniendo instalaciones:', error);
-    res.status(500).json({ error: 'Error obteniendo instalaciones' });
+    console.error('Error obteniendo clientes:', error);
+    res.status(500).json({ error: 'Error obteniendo clientes' });
   }
 });
-
 
 async function startServer() {
     try {
