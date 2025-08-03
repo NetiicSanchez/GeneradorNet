@@ -95,7 +95,6 @@ app.get('/',protegido, (req, res) => {
 });
 
 // <-- CÓDIGO MODIFICADO -->
-// Se reemplaza la lista manual por la consulta automática a la API de Whisphub
 app.get('/clientes-disponibles', protegido, async (req, res) => {
   try {
     const API_URL = 'https://api.wisphub.io/instalaciones?limit=1000&offset=0';
@@ -112,6 +111,8 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     }
 
     const data = await response.json();
+    console.log('Respuesta de Whisphub:', JSON.stringify(data)); // <-- AGREGA ESTE LOG
+
     const instalaciones = data.results || data;
 
     const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
@@ -119,7 +120,7 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
 
     const disponibles = instalaciones
       .filter(inst => inst.nombre && !usadosSet.has(inst.nombre))
-      .map(inst => inst.nombre); // Devolver solo los nombres
+      .map(inst => inst.nombre);
 
     res.json(disponibles);
   } catch (error) {
@@ -127,7 +128,6 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     res.status(500).json({ error: 'Error obteniendo instalaciones' });
   }
 });
-
 
 
 async function startServer() {
