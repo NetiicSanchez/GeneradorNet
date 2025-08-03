@@ -4,6 +4,8 @@ const path = require('path');// nos sirve para manejar rutas de archivos
 const app = express();
 const session = require ('express-session');// nos sirve para manejar sesiones  
 const CodigoNet = require('./modelos/codigoNet');
+const fetch = require('node-fetch'); // <-- AÑADIDO
+
 app.use(express.urlencoded({ extended: true })); // para poder recibir datos del formulario
 
 
@@ -92,26 +94,38 @@ app.get('/',protegido, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'formulario_generar_net.html'));
 });
 
+// <-- CÓDIGO MODIFICADO -->
+// Se reemplaza la lista manual por la consulta automática a la API de Whisphub
 app.get('/clientes-disponibles', protegido, async (req, res) => {
-  const todos = [
+  try {
+    const API_URL = 'https://api.wisphub.io/instalaciones?limit=1000&offset=0';
+    const API_KEY = 'CIPHqpe5.efkWsPk0wVAXpdYvivIFESiIpwWfWZqV';
+    const response = await fetch(API_URL, {
+      headers: {
+        'Authorization': `Api-Key ${API_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
 
-    "NIMCY ENEIDA BENITES GONZALES",
-    "BLANCA GUISELA LOPEZ SOC",
-    "JAQUELINE SUSAN SALES GARCIA DE VELASQUEZ",
-    "AARON MIZRAIM OVANDO PIEDRASANTA",
-    "MARIA JULIA MARTINEZ DE SACOR",
-    "MARIA CONSUELO VASQUEZ LOPEZ",
-    "NIVIAN AMANDA LOPEZ VASQUEZ DE HERNANDEZ",
-    "ERICK ALFREDO LOPEZ MOH",
-    "PABLO MARTIN SARAT VAMAC"
+    if (!response.ok) {
+      throw new Error(`Error de Whisphub: ${response.statusText}`);
+    }
 
+    const data = await response.json();
+    const instalaciones = data.results || data;
 
-  ];
+    const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
+    const usadosSet = new Set(usados.map(c => c.nombre_cliente));
 
-  const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
-  const usadosSet = new Set(usados.map(c => c.nombre_cliente));
-  const disponibles = todos.filter(nombre => !usadosSet.has(nombre));
-  res.json(disponibles);
+    const disponibles = instalaciones
+      .filter(inst => inst.nombre && !usadosSet.has(inst.nombre))
+      .map(inst => inst.nombre); // Devolver solo los nombres
+
+    res.json(disponibles);
+  } catch (error) {
+    console.error('Error obteniendo instalaciones:', error);
+    res.status(500).json({ error: 'Error obteniendo instalaciones' });
+  }
 });
 
 
