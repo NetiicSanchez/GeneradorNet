@@ -4,8 +4,6 @@ const path = require('path');// nos sirve para manejar rutas de archivos
 const app = express();
 const session = require ('express-session');// nos sirve para manejar sesiones  
 const CodigoNet = require('./modelos/codigoNet');
-const fetch = require('node-fetch'); // <-- AÑADIDO
-
 app.use(express.urlencoded({ extended: true })); // para poder recibir datos del formulario
 
 
@@ -94,41 +92,29 @@ app.get('/',protegido, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'formulario_generar_net.html'));
 });
 
-// <-- CÓDIGO MODIFICADO -->
 app.get('/clientes-disponibles', protegido, async (req, res) => {
-  try {
-    const API_URL = 'https://api.wisphub.net/api/clientes/';
-    const API_KEY = 'CIPHqpe5.efkWsPk0wVAXpdYvivIFESiIpwWfWZqV';
-    const response = await fetch(API_URL, {
-      headers: {
-        'Authorization': `Api-Key ${API_KEY}`,
-        'Content-Type': 'application/json'
-      }
-    });
+  const todos = [
 
-    if (!response.ok) {
-      throw new Error(`Error de Whisphub: ${response.statusText}`);
-    }
+    "NIVIAN AMANDA LOPEZ VASQUEZ DE HERNANDEZ",
+    "ERICK ALFREDO LOPEZ MOH",
+    "DULCE GABRIELA MONROY CAMEY",
+    "ENMA DAMARIS CABRERA SALES",
+    "EDWARD VINICIO HERNANDEZ PELAEZ",
+    "CESAR EDUARDO CABRERA LOPEZ",
+    "CINDY PAOLA IXCOT DE LEON DE MIRANDA",
+    "LEYSER ESTUARDO POS CARRILLO",
+    "CHARY ALEJANDRA GUZMAN IXCOY"
 
-    const data = await response.json();
-    console.log('Respuesta de Whisphub:', JSON.stringify(data));
 
-    // Ajusta el nombre del campo según la respuesta real
-    const clientes = data.results || data;
+  ];
 
-    const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
-    const usadosSet = new Set(usados.map(c => c.nombre_cliente));
-
-    const disponibles = clientes
-      .filter(cliente => cliente.nombre && !usadosSet.has(cliente.nombre))
-      .map(cliente => cliente.nombre);
-
-    res.json(disponibles);
-  } catch (error) {
-    console.error('Error obteniendo clientes:', error);
-    res.status(500).json({ error: 'Error obteniendo clientes' });
-  }
+  const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
+  const usadosSet = new Set(usados.map(c => c.nombre_cliente));
+  const disponibles = todos.filter(nombre => !usadosSet.has(nombre));
+  res.json(disponibles);
 });
+
+
 
 async function startServer() {
     try {
