@@ -107,6 +107,7 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "DENYS ALEZANDRO ALONZO MEJIA",
     "LUIS ARMANDO IXCOY IXCAL",
     "DANIEL JEREMIAS MAZARIEGOS HERRERA",
+    "MARIA CELESTE DE LEON OCHOA",
   ];
 
   const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
