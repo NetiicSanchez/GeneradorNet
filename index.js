@@ -105,6 +105,9 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "	MARJORIE ANDREA DE LEON MEZA",
     "LESLY MAGALY HIDALGO FUENTES",
     "LUISA FERNANDA LOPEZ MARROQUIN",
+    "MARIA ALEJANDRA CHAMALE LOPEZ DE SANTIAGO",  
+    "RAUL ENRIQUE IZQUIERDO",
+    "CLAUDIA ARACELI ESCOBAR"
 
   ];
 
