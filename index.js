@@ -94,12 +94,12 @@ app.get('/',protegido, (req, res) => {
 
 app.get('/clientes-disponibles', protegido, async (req, res) => {
   const todos = [
-    "DULCE ANA MARIA NATARENO TASEJ",
-    "LESLY MAGALY HIDALGO FUENTES",
-    "RONY EVANILSON JUAREZ ARDON",
-    "	DELMY AZUCENA PELICO HIDALGO",
-    "GLORIA IRMA CHACAJ PABLO",
-    "CLAUDIA ARACELI ESCOBAR REEMPLAZAR"
+    "	IVY AZUCENA MENDEZ RAZON",
+    "ALEXANDER ROBERTO GAMBOA LOPEZ",
+    "	GLORIA IRMA CHACAJ PABLO",
+    "BYRON ANIBAL MEJIA ELIAS",
+    "3ACISCLO ENRIQUE SOLIS GOMEZ",
+  
    
 
   ];
