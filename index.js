@@ -99,6 +99,7 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     "	GLORIA IRMA CHACAJ PABLO",
     "BYRON ANIBAL MEJIA ELIAS",
     "3ACISCLO ENRIQUE SOLIS GOMEZ",
+    "Victor Josué Quintanilla rodas B"
   
    
 
