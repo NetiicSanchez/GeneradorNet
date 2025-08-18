@@ -1,4 +1,5 @@
 const express = require('express');// nos sirve para crear el servidor
+const { Op } = require('sequelize'); // <--- AÑADIDO PARA BÚSQUEDAS
 const sequelize = require('./configuracion/db');//nos sirve para conectar a la base de datos (la base que creamos en el archivo db.js)
 const path = require('path');// nos sirve para manejar rutas de archivos
 const app = express();
@@ -95,15 +96,16 @@ app.get('/',protegido, (req, res) => {
 app.get('/clientes-disponibles', protegido, async (req, res) => {
   const todos = [
  "JAQUELINE VIRGINIA LAMMIE ALFARO",
- "LUIS RUFINO TANAHUBIA VELASQUEZ",
- "BARTOLO PELICO VICENTE",
- "	ISMENIA YOMARA LOPEZ RIVAS",
- "EDELMAN ARDANY MARTINEZ QUICHE",
- "GLADYS MARIA DEL ROSARIO LOPEZ FIGUEROA",
- "JOSE MANUEL BALCAZAR FRANCO",
- "REICINGER ELI US VASQUEZ",
- "DEISY LORENA SUNUN GONZALEZ",
- "ROBBIN MARCO ANTONIO MONZON CIFUENTES"
+"LUIS RUFINO TANAHUBIA VELASQUEZ",
+"ISMENIA YOMARA LOPEZ RIVAS",
+"	REICINGER ELI US VASQUEZ",
+"DEISY LORENA SUNUN GONZALEZ",
+"ROBBIN MARCO ANTONIO MONZON CIFUENTES",
+"	HECTOR JAVIER REYES RODAS",
+"	ELDER ALFREDO MORAN SANCHEZ",
+"MARIA JOSE PORRAS AGUILAR",
+"JULIANA LAJPOP GONZALEZ DE SANTAY",
+"BELISARIO ALEJANDRO AVILA CHAN"
 
 
   ];
@@ -114,7 +116,42 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
   res.json(disponibles);
 });
 
+// Ruta para buscar códigos NET por nombre o código NET
+app.get('/buscar-imagenes', protegido, async (req, res) => {
+  try {
+    const q = req.query.q || '';
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10; // 10 imágenes por página
 
+    let where = {};
+    
+    if (q) {
+      where = {
+        [Op.or]: [
+          { nombre_cliente: { [Op.iLike]: `%${q}%` } }, // Buscar por nombre del cliente
+          { codigo_net: { [Op.iLike]: `%${q}%` } }      // Buscar por código NET
+        ]
+      };
+    }
+
+    const { count, rows } = await CodigoNet.findAndCountAll({
+      where,
+      limit,
+      offset: (page - 1) * limit,
+      order: [['idcodigonet', 'DESC']] // Ordenar por más reciente
+    });
+
+    res.json({
+      total: count,
+      paginas: Math.ceil(count / limit),
+      paginaActual: page,
+      imagenes: rows
+    });
+  } catch (error) {
+    console.error('Error al buscar imágenes:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
 
 async function startServer() {
     try {
