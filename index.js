@@ -111,7 +111,8 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
  "YENSY LORENA MIRANDA REYES",
  " MARCO ANTONIO SOLOJ SANTOS",
  "KIMBERLY",
- "JOSEELINNE JAYLIN"
+ "JOSEELINNE JAYLIN",
+ "MARCO ANTONIO SOLOJ SANTOS"
  
   ];
 
