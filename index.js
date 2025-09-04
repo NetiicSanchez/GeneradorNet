@@ -97,9 +97,9 @@ app.get('/',protegido, (req, res) => {
 });
 
 // Configuración Wisphub
-const WISPHUB_BASE_URL = process.env.WISPHUB_BASE_URL;
-const WISPHUB_TOKEN = process.env.WISPHUB_TOKEN;
-const WISPHUB_PATH = process.env.WISPHUB_PATH || '/api/instalaciones/';
+const WISPHUB_BASE_URL ='https://api.wisphub.io';
+const WISPHUB_TOKEN = 'CIPHqpe5.efkWsPk0wVAXpdYvivIFESiIpwWfWZqV';
+const WISPHUB_PATH ='/api/instalaciones/';
 
 async function fetchClientesFromWisphub() {
   if (!WISPHUB_BASE_URL || !WISPHUB_TOKEN) return [];
