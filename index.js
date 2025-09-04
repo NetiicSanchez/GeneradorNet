@@ -1,4 +1,7 @@
 const express = require('express');// nos sirve para crear el servidor
+const axios = require('axios');
+const dotenv = require('dotenv');
+dotenv.config();
 const { Op } = require('sequelize'); // <--- AÑADIDO PARA BÚSQUEDAS
 const sequelize = require('./configuracion/db');//nos sirve para conectar a la base de datos (la base que creamos en el archivo db.js)
 const path = require('path');// nos sirve para manejar rutas de archivos
@@ -93,27 +96,40 @@ app.get('/',protegido, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'formulario_generar_net.html'));
 });
 
+// Configuración Wisphub
+const WISPHUB_BASE_URL = process.env.WISPHUB_BASE_URL;
+const WISPHUB_TOKEN = process.env.WISPHUB_TOKEN;
+const WISPHUB_PATH = process.env.WISPHUB_PATH || '/api/instalaciones/';
+
+async function fetchClientesFromWisphub() {
+  if (!WISPHUB_BASE_URL || !WISPHUB_TOKEN) return [];
+  const url = new URL(WISPHUB_PATH, WISPHUB_BASE_URL).toString();
+  const headers = {
+    Authorization: `Api-Key ${WISPHUB_TOKEN}`,
+    'Content-Type': 'application/json'
+  };
+  try {
+    const { data } = await axios.get(url, { headers });
+    if (Array.isArray(data?.results)) {
+      return data.results.map(item => item?.nombre).filter(Boolean);
+    }
+    return [];
+  } catch (err) {
+    console.error('Error consultando Wisphub:', err?.response?.status, err?.message);
+    return [];
+  }
+}
+
 app.get('/clientes-disponibles', protegido, async (req, res) => {
-  const todos = [
- "WILBER SANCHEZ",
- "VIVIAN ARACELY ROZZOTO MAZARIEGOS",
- "SUCELY ROSMERY HERNANDEZ PEREZ",
- "NORMA ANABELYN ARIAS VASQUEZ DE CARRILLO",
- "IDALIA DEL CARMEN AGUILAR POZ DE LOPEZ",
- "HARDY ALEXANDER SOLIS GREGORIO",
- "LUZ FRANCISCA SICA RAMOS DE PEREZ",
- "IRIS LILIANA VICENTE MEJIA DE MERIDA",
- "WENDY ARACELI VASQUEZ ROJOP",
- "ERIX EMILIO DE LEON SANCHEZ",
- "KIMBERLY LUCERO ESCALANTE TI"
-
-
-  ];
-
-  const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
-  const usadosSet = new Set(usados.map(c => c.nombre_cliente));
-  const disponibles = todos.filter(nombre => !usadosSet.has(nombre));
-  res.json(disponibles);
+  try {
+    const clientes = await fetchClientesFromWisphub();
+    const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
+    const usadosSet = new Set(usados.map(c => c.nombre_cliente));
+    const disponibles = clientes.filter(nombre => !usadosSet.has(nombre));
+  res.json(disponibles.slice(0, 25));
+  } catch (err) {
+    res.status(502).json({ error: 'No se pudo consultar Wisphub' });
+  }
 });
 
 // Ruta para buscar códigos NET por nombre o código NET
