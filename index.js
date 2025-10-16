@@ -126,7 +126,7 @@ app.get('/clientes-disponibles', protegido, async (req, res) => {
     const usados = await CodigoNet.findAll({ attributes: ['nombre_cliente'] });
     const usadosSet = new Set(usados.map(c => c.nombre_cliente));
     const disponibles = clientes.filter(nombre => !usadosSet.has(nombre));
-  res.json(disponibles.slice(0, 35));
+  res.json(disponibles.slice(0, 55));
   } catch (err) {
     res.status(502).json({ error: 'No se pudo consultar Wisphub' });
   }
