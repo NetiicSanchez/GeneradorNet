@@ -175,7 +175,7 @@ app.get('/buscar-imagenes', protegido, async (req, res) => {
 async function startServer() {
     try {
       await sequelize.authenticate();
-      console.log('Conexión a PostgreSQL exitosa');
+      console.log('Conexión a PostgreSQL exitosa :)');
 
       await sequelize.sync(); // Sincronizar modelos con la base de datos
       console.log('Modelos sincronizados con la base de datos');
