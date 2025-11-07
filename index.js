@@ -37,9 +37,11 @@ const usuarios= [
   { username: 'marcoslopez@nettic', password: 'marcoslopez' , rol:'tecnico' },
   { username: 'j.pelico@nettic', password: 'supjuanpelico' , rol:'tecnico' },
   {username: 'mariobernabe@nettic', password: 'mariobernabe', rol:'tecnico' },
+  { username: '47932932.nettic@gmail.com', password: '47932932##', rol:'tecnico' },
   { username: 'despmarielos', password: 'marielos211' , rol:'despacho' },
   { username: 'despnery', password: 'nerygomez', rol:'despacho' },
   { username: 'jcpelico', password: 'juanpelico', rol:'despacho' },
+
   
 ];
 
